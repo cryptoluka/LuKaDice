@@ -11,7 +11,7 @@ create database dice;
 		email VARCHAR(200) NULL,
 		creationtime datetime NOT NULL DEFAULT NOW(),
 		lastupdate datetime NULL
-		);
+	);
 
 
 	create table rollhistory(
@@ -25,7 +25,7 @@ create database dice;
 		result BOOL,
 		creationtime datetime NOT NULL DEFAULT NOW(),
 		lastupdate datetime NULL
-		);
+	);
 
 	ALTER TABLE rollhistory
 	ADD FOREIGN KEY (idplayer) REFERENCES player(idplayer);
@@ -43,10 +43,19 @@ GROUP BY p.nickname, p.email,  p.password, p.balance
 ORDER BY  sum(r.bet) DESC;
 
 
--- GET JACKPOT SUM
+-- GET JACKPOT TOTAL
 SELECT SUM(ab.Profit) AS 'JACKPOT' FROM rollhistory roll
 JOIN (
-	SELECT r.idplayer AS 'nick',(50 - p.balance) AS 'Profit'
+	SELECT r.idplayer AS 'nick', (50 - p.balance) AS 'Profit'
+	FROM rollhistory r
+	JOIN player p ON p.idplayer = r.idplayer
+	GROUP BY p.nickname, r.idplayer, p.balance, (50 - p.balance)
+	) ab ON roll.idplayer = ab.nick
+
+-- GET JACKPOT PAYABLE (66%)
+SELECT (SUM(ab.Profit) / 3) * 2 AS 'JACKPOT' FROM rollhistory roll
+JOIN (
+	SELECT r.idplayer AS 'nick',( 50 - p.balance) AS 'Profit'
 	FROM rollhistory r
 	JOIN player p ON p.idplayer = r.idplayer
 	GROUP BY p.nickname, r.idplayer, p.balance, (50 - p.balance)
