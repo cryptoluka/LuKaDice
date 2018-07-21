@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21-jul-2018 5:43:51 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.cryptoluka.entity.Rollhistory" table="rollhistory" catalog="dice" optimistic-lock="version">
+        <id name="idgame" type="string">
+            <column name="idgame" length="36" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="player" class="org.cryptoluka.entity.Player" fetch="select">
+            <column name="idplayer" length="36" not-null="true" />
+        </many-to-one>
+        <property name="nickname" type="string">
+            <column name="nickname" length="100" not-null="true" />
+        </property>
+        <property name="bet" type="big_decimal">
+            <column name="bet" precision="15" scale="8" not-null="true" />
+        </property>
+        <property name="target" type="big_decimal">
+            <column name="target" precision="5" scale="2" not-null="true" />
+        </property>
+        <property name="number" type="int">
+            <column name="number" precision="5" scale="0" not-null="true" />
+        </property>
+        <property name="profit" type="big_decimal">
+            <column name="profit" precision="15" scale="8" not-null="true" />
+        </property>
+        <property name="result" type="java.lang.Boolean">
+            <column name="result" />
+        </property>
+        <property name="creationtime" type="timestamp">
+            <column name="creationtime" length="19" not-null="true" />
+        </property>
+        <property name="lastupdate" type="timestamp">
+            <column name="lastupdate" length="19" />
+        </property>
+    </class>
+</hibernate-mapping>
