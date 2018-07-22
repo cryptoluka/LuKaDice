@@ -601,9 +601,11 @@ canvas {
         padding: 0;
         line-height: 54px;
     }
+    
+    
     .custom-navbar .navbar-toggle {
         margin: 12px -10px 0 0;
-        position: static;
+        position: relative;
         transform: none;
     }
     .navbar-left,

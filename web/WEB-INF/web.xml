@@ -16,6 +16,10 @@
         <servlet-name>closeSession</servlet-name>
         <servlet-class>org.cryptoluka.controller.closeSession</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>getInfo</servlet-name>
+        <servlet-class>org.cryptoluka.controller.getInfo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>playDice</servlet-name>
         <url-pattern>/playDice</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>closeSession</servlet-name>
         <url-pattern>/closeSession</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getInfo</servlet-name>
+        <url-pattern>/getInfo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

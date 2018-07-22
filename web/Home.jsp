@@ -41,6 +41,7 @@
         <script type="text/javascript" src="js/moment.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/toastr/toastr.js"></script>
+        <script type="text/javascript" src="js/daemons/daemons.js"></script>
 
     </head>
     <body>
@@ -56,10 +57,18 @@
                         <img alt="Luka isotipo" class="isotipo" src="images/isotipo-luka.svg" />
                         <img alt="Luka logotipo" class="logotipo" src="images/logotipo-luka.svg" />
                     </a>
+
+
+
                     <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse"></button>
                 </div>
-                <div class="collapse navbar-collapse" id="navbar-collapsible">
 
+                <div style="text-align: center; position: absolute; margin-left: 30%; display: block; transform: none; top: 0; margin-top: 15px">
+                    <h4>JACKPOT: <span id="jackpotNumber">0.00000000</span> LUK</h4>
+                </div>
+
+
+                <div class="collapse navbar-collapse" id="navbar-collapsible">
                     <ul class="nav navbar-nav navbar-right">
                         <li class="active"><a class="scroll" href="#">DICE</a></li>
                         <li><a class="scroll" href="#">MORE COMING SOON...</a></li>
@@ -74,7 +83,7 @@
         ============================== -->
         <div style="margin-top: 80px; text-align: center">
 
-            <h1 style="text-align: center">Play Dice DEMO!</h1>
+            <h2 style="text-align: center">DICE DEMO! </h2>
 
             <div class="row" style="width: 96%; margin: auto">
 
@@ -133,7 +142,7 @@
 
                     <div style="margin-top: 2vh; margin-left: 5%; margin-right: 5%" class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="padding: 0">
-                            <input id="myBetValue" class="input-lg" style="width: 100%" value="0.00001000" step="0.00000001" min="0.00001000" max="1000" type="number" />
+                            <input id="myBetValue" class="input-lg" style="width: 100%" value="0.00001000" step="0.00000001" min="0.00001000" max="100" type="number" />
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4" style="padding: 0">
                             <button onclick="divideButton()" class="form-control btnBets">/2</button>
@@ -219,9 +228,9 @@
             <%
                 if (pl != null) {
             %>
-                myBalance = <%= pl.getBalance() %>
+            myBalance = <%= pl.getBalance()%>
             <%
-                            }
+                }
             %>
 
 
@@ -260,6 +269,9 @@
                 };
 
                 switchLogin(1); // login
+                
+                getJackpot();
+                runDaemons(); // run daemons
 
             });
 
@@ -437,16 +449,16 @@
             }
 
             function maxButton() {
-                
+
                 var apostable = Number(myBalance).toFixed(8) - 0.00000001;
-                
-                if(apostable > 100) {
+
+                if (apostable > 100) {
                     $('#myBetValue').val(100.00000000);
                 } else {
                     $('#myBetValue').val(apostable);
                 }
-                
-                
+
+
             }
 
 

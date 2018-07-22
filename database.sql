@@ -64,3 +64,23 @@ JOIN (
 
 
 
+SELECT SUM(ab.Profit) AS 'JACKPOT' FROM player pl
+JOIN (
+	SELECT r.idplayer AS 'nick', (50 - p.balance) AS 'Profit'
+	FROM rollhistory r
+	JOIN player p ON p.idplayer = r.idplayer
+	GROUP BY p.nickname, r.idplayer, p.balance, (50 - p.balance)
+	) ab ON pl.idplayer = ab.nick
+
+
+
+SELECT (SUM(ab.Profit) / 3) * 2 AS 'JACKPOT' FROM player pl
+JOIN (
+	SELECT r.idplayer AS 'nick', (50 - p.balance) AS 'Profit'
+	FROM rollhistory r
+	JOIN player p ON p.idplayer = r.idplayer
+	GROUP BY p.nickname, r.idplayer, p.balance, (50 - p.balance)
+	) ab ON pl.idplayer = ab.nick
+
+
+
