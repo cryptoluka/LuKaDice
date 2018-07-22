@@ -58,7 +58,7 @@ public class getInfo extends HttpServlet {
 
                     resp.addProperty("status", "OK");
                     resp.addProperty("message", "Jackpot");
-                    resp.addProperty("jackpot", Double.parseDouble(eight.format(idao.getJackpot()).replace(",", ".")));
+                    resp.addProperty("jackpot", idao.getJackpot());
                     break;
                 default:
                     resp.addProperty("status", "OK");

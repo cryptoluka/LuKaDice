@@ -43,44 +43,23 @@ GROUP BY p.nickname, p.email,  p.password, p.balance
 ORDER BY  sum(r.bet) DESC;
 
 
--- GET JACKPOT TOTAL
-SELECT SUM(ab.Profit) AS 'JACKPOT' FROM rollhistory roll
+-- GET JACKPOT TOTAL ^8 (100%)
+SELECT ROUND(SUM(ab.Profit), 8) AS 'JACKPOT' FROM player pl
 JOIN (
 	SELECT r.idplayer AS 'nick', (50 - p.balance) AS 'Profit'
 	FROM rollhistory r
 	JOIN player p ON p.idplayer = r.idplayer
 	GROUP BY p.nickname, r.idplayer, p.balance, (50 - p.balance)
-	) ab ON roll.idplayer = ab.nick
-
--- GET JACKPOT PAYABLE (66%)
-SELECT (SUM(ab.Profit) / 3) * 2 AS 'JACKPOT' FROM rollhistory roll
-JOIN (
-	SELECT r.idplayer AS 'nick',( 50 - p.balance) AS 'Profit'
-	FROM rollhistory r
-	JOIN player p ON p.idplayer = r.idplayer
-	GROUP BY p.nickname, r.idplayer, p.balance, (50 - p.balance)
-	) ab ON roll.idplayer = ab.nick
+	) ab ON pl.idplayer = ab.nick;
 
 
-
-
-SELECT SUM(ab.Profit) AS 'JACKPOT' FROM player pl
+-- GET JACKPOT PAYABLE ^8 (66%) ^8
+SELECT ROUND(((SUM(ab.Profit) / 3) * 2),8) AS 'JACKPOT' FROM player pl
 JOIN (
 	SELECT r.idplayer AS 'nick', (50 - p.balance) AS 'Profit'
 	FROM rollhistory r
 	JOIN player p ON p.idplayer = r.idplayer
 	GROUP BY p.nickname, r.idplayer, p.balance, (50 - p.balance)
-	) ab ON pl.idplayer = ab.nick
-
-
-
-SELECT (SUM(ab.Profit) / 3) * 2 AS 'JACKPOT' FROM player pl
-JOIN (
-	SELECT r.idplayer AS 'nick', (50 - p.balance) AS 'Profit'
-	FROM rollhistory r
-	JOIN player p ON p.idplayer = r.idplayer
-	GROUP BY p.nickname, r.idplayer, p.balance, (50 - p.balance)
-	) ab ON pl.idplayer = ab.nick
-
+	) ab ON pl.idplayer = ab.nick;
 
 

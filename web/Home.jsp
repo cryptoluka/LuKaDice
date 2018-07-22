@@ -270,7 +270,6 @@
 
                 switchLogin(1); // login
                 
-                getJackpot();
                 runDaemons(); // run daemons
 
             });

@@ -24,13 +24,13 @@ public class InfoDAO {
 
         try {
 
-            String statement = "SELECT (SUM(ab.Profit) / 3) * 2 AS 'JACKPOT' FROM player pl\n"
+            String statement = "SELECT ROUND(((SUM(ab.Profit) / 3) * 2),8) AS 'JACKPOT' FROM player pl\n"
                     + "JOIN (\n"
                     + "	SELECT r.idplayer AS 'nick', (50 - p.balance) AS 'Profit'\n"
                     + "	FROM rollhistory r\n"
                     + "	JOIN player p ON p.idplayer = r.idplayer\n"
                     + "	GROUP BY p.nickname, r.idplayer, p.balance, (50 - p.balance)\n"
-                    + "	) ab ON pl.idplayer = ab.nick";
+                    + "	) ab ON pl.idplayer = ab.nick;";
 
             double jackpot = 0;
 
