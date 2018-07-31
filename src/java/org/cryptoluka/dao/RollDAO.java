@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.cryptoluka.dal.HibernateUtil;
 import org.cryptoluka.entity.Rollhistory;
+import org.hibernate.criterion.Order;
 
 /**
  *
@@ -57,6 +58,27 @@ public class RollDAO {
         try {
             List<Rollhistory> lista = (List<Rollhistory>) session.createCriteria(Rollhistory.class)
                     .add(Restrictions.eq("status", 1))
+                    .list();
+            session.getTransaction().commit();
+            return lista;
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            session.close();
+            System.out.println(e.getMessage());
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
+    
+    public List<Rollhistory> getLast7Bets() throws Exception {
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        try {
+            List<Rollhistory> lista = (List<Rollhistory>) session.createCriteria(Rollhistory.class)
+                    .setMaxResults(7)
+                    .addOrder(Order.desc("creationtime"))
                     .list();
             session.getTransaction().commit();
             return lista;

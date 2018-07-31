@@ -17,7 +17,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-#diceTable {
+#diceTable, #recentBetsTable {
     color: white;
     width: 90%;
     margin: auto;

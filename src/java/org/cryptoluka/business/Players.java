@@ -66,7 +66,7 @@ public class Players {
             p.setIdplayer(UUID.randomUUID().toString());
             p.setPaymentid(pay.generatePaymentID());
             p.setNickname("player-" + p.getIdplayer().substring(0, 8));
-            p.setBalance(BigDecimal.valueOf(50.00000000));
+            p.setBalance(BigDecimal.valueOf(0.00000010));
             p.setEmail(email);
             p.setUsername("player-" + p.getIdplayer().substring(0, 8));
             p.setPassword(Encriptacion.Encriptar(password));

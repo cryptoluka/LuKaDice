@@ -5,15 +5,21 @@
  */
 package org.cryptoluka.controller;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.cryptoluka.dao.InfoDAO;
+import org.cryptoluka.dao.RollDAO;
+import org.cryptoluka.entity.Player;
+import org.cryptoluka.entity.Rollhistory;
 
 /**
  *
@@ -46,7 +52,6 @@ public class getInfo extends HttpServlet {
                 throw new Exception("Invalid parameters");
             }
 
-            
             switch (required) {
 
                 case "jackpot":
@@ -56,10 +61,39 @@ public class getInfo extends HttpServlet {
                     resp.addProperty("message", "Jackpot");
                     resp.addProperty("jackpot", idao.getJackpot());
                     break;
+                case "last7plays":
+
+                    RollDAO rdao = new RollDAO();
+                    ArrayList<Rollhistory> rolls = (ArrayList<Rollhistory>) rdao.getLast7Bets();
+
+                    JsonArray lastBets = new JsonArray();
+
+                    if (rolls.size() > 0) {
+
+                        for (Rollhistory bet : rolls) {
+
+                            JsonObject myRoll = new JsonObject();
+
+                            myRoll.addProperty("gameid", bet.getIdgame());
+                            myRoll.addProperty("player", bet.getNickname());
+                            myRoll.addProperty("time", bet.getCreationtime().toString());
+                            myRoll.addProperty("bet", bet.getBet());
+                            myRoll.addProperty("target", bet.getTarget());
+                            myRoll.addProperty("number", bet.getNumber());
+                            myRoll.addProperty("result", bet.getResult());
+
+                            lastBets.add(myRoll);
+
+                        }
+                    }
+
+                    resp.addProperty("status", "OK");
+                    resp.add("message", lastBets);
+
+                    break;
                 default:
                     resp.addProperty("status", "OK");
                     resp.addProperty("message", "Method not found");
-
             }
 
         } catch (Exception ex) {

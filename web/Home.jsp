@@ -109,8 +109,7 @@
                             <button onclick="retirar()" class="btn-danger"><i class="fa fa-share"></i></button>
                         </div>
                         <div>
-
-                            <p>NickName: <%= pl.getUsername()%> </p> 
+                            <p>NickName: <%= pl.getUsername() %> </p> 
                             <p>Balance: <span id="myBalance"><%= pl.getBalance()%></span> LUK</p>
                             <p style="color: #0f0">Win Times: <span id="winTime">0</span></p>
                             <p style="color: red">Lose Times: <span id="loseTime">0</span></p>
@@ -190,13 +189,28 @@
 
             <div class="row pull-right" style="text-align: right; margin-right: 4%; display: inline-block"  >
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
-                    <button onclick="" class="">My last bets</button>
-                    <button onclick="" class="">Recent bets</button>
-                    <button onclick="" class="">High rollers</button>
+                    <button onclick="changeTableMyLast()" class="">My last bets</button>
+                    <button onclick="changeTableRecentBets()" class="">Recent bets</button>
+                    <button onclick="changeTableHighRollers()" class="">High rollers</button>
                     <button onclick="" class="">History</button>
                 </div>
             </div>
             <table id="diceTable" class="table  table-condensed cell-border" >
+                <thead>
+                    <tr >
+                        <th style="text-align: center">GAME ID</th>
+                        <th style="text-align: center">PLAYER</th>
+                        <th style="text-align: center">TIME (UTC)</th>
+                        <th style="text-align: center">BET</th>
+                        <th style="text-align: center">TARGET</th>
+                        <th style="text-align: center">NUMBER</th>
+                        <th style="text-align: center">RESULT</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            
+            <table id="recentBetsTable" class="table  table-condensed cell-border" >
                 <thead>
                     <tr >
                         <th style="text-align: center">GAME ID</th>
@@ -218,6 +232,7 @@
             var wins = 0;
             var loses = 0;
             var table = null;
+            var tableRecentBets = null;
             var target = 0;
             var payout = 0;
             var myBalance = 0;
@@ -244,10 +259,12 @@
                     "ordering": false,
                     "pageLength": 7
                 });
+                
                 // SETUP DEFAULT VALUES
                 $('#winTime').text(wins);
                 $('#loseTime').text(loses);
                 $('#betRange').val(5000).change();
+                
                 // SETUP ALERTS
                 toastr.options = {
                     "closeButton": false,
@@ -269,6 +286,18 @@
                 switchLogin(1); // login
 
                 runDaemons(); // run daemons
+                
+                
+                // INIT TABLE RECENT BETS
+                tableRecentBets = $('#recentBetsTable').DataTable({
+                    "dom": '<"top">rt<"bottom"><"clear">',
+                    "ordering": false,
+                    "pageLength": 7
+                });
+                
+                
+                changeTableMyLast();
+                
 
             });
             function play() {
@@ -526,7 +555,7 @@
 
                 var email = $('#email').val();
                 var pass = $('#password').val();
-                
+
                 if (email === null || email === undefined || email.trim().length < 1 || email.trim() === "") {
                     toastr.error("Debe ingresar correo");
                     return;
@@ -536,7 +565,7 @@
                     toastr.error("Debe ingresar contraseña");
                     return;
                 }
-                
+
                 if (email.length > 190) {
                     toastr.error("Correo ingresado excede el largo permitido");
                     return;
@@ -711,6 +740,28 @@
                         }
                     }
                 });
+            }
+            
+            
+            function changeTableMyLast() {
+                
+                $('#diceTable').show();
+                $('#recentBetsTable').hide();
+                
+            }
+            
+            function changeTableRecentBets() {
+                
+                $('#diceTable').hide();
+                $('#recentBetsTable').show();
+                
+            }
+            
+            function changeTableHighRollers() {
+                
+                $('#diceTable').hide();
+                $('#recentBetsTable').hide();
+                
             }
 
         </script>
