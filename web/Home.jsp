@@ -95,7 +95,7 @@
 
             <div class="row" style="width: 96%; margin: auto">
 
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="text-align: left; border: solid 1px white; margin-right: 2%;">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="text-align: left; border: solid 1px white; margin-right: 2%; z-index: 1000;">
 
                     <% if (pl != null) {%>
 
