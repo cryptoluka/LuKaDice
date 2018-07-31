@@ -164,6 +164,8 @@ public class PlayerDAO {
         }
 
     }
+    
+    
 
     public Player getByCorreoActive(String correo) throws Exception {
         Session session = HibernateUtil.getSessionFactory().openSession();

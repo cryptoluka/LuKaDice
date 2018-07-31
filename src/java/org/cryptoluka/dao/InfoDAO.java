@@ -5,10 +5,8 @@
  */
 package org.cryptoluka.dao;
 
-import java.math.BigDecimal;
 import java.util.List;
 import org.cryptoluka.dal.HibernateUtil;
-import org.cryptoluka.entity.Player;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
@@ -24,6 +22,7 @@ public class InfoDAO {
 
         try {
 
+            // ONLY SHOWS PAYABLE JACKPOT (66%)
             String statement = "SELECT ROUND(((SUM(ab.Profit) / 3) * 2),8) AS 'JACKPOT' FROM player pl\n"
                     + "JOIN (\n"
                     + "	SELECT r.idplayer AS 'nick', (50 - p.balance) AS 'Profit'\n"

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.cryptoluka.business.Players;
+import org.cryptoluka.dao.PlayerDAO;
 import org.cryptoluka.entity.Player;
 import org.cryptoluka.utils.Respuesta;
 
@@ -90,6 +91,12 @@ public class register extends HttpServlet {
                 throw new Exception();
             }
 
+            // Validar si existen mas
+            PlayerDAO pdao = new PlayerDAO();
+            if (pdao.getByCorreoActive(email) != null) {
+                throw new Exception("Ya existe usuario!");
+            }
+
             Players p = new Players();
 
             Respuesta r = p.registrarUsuario(email, pass1);
@@ -103,7 +110,7 @@ public class register extends HttpServlet {
 
             }
         } catch (Exception ex) {
-            resp.addProperty("status", ex.toString());
+            resp.addProperty("status", ex.getMessage());
         }
 
         out.print(resp.toString());

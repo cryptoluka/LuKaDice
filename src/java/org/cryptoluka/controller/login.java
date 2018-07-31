@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.cryptoluka.business.Players;
+import org.cryptoluka.dao.PlayerDAO;
 import org.cryptoluka.entity.Player;
 import org.cryptoluka.utils.Respuesta;
 
@@ -81,7 +82,6 @@ public class login extends HttpServlet {
             }
 
            
-
             Players p = new Players();
 
             Respuesta r = p.Login(email, pass);
@@ -90,7 +90,6 @@ public class login extends HttpServlet {
 
                 Player session = (Player) r.getData();
                 session.setPassword("");
-                
                 
                 request.getSession().setAttribute("player", session);
 

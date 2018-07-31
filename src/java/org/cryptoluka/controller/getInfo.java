@@ -47,10 +47,6 @@ public class getInfo extends HttpServlet {
             }
 
             
-            // INIT MATH OBJECTS
-            DecimalFormat eight = new DecimalFormat("0.00000000");
-            
-            
             switch (required) {
 
                 case "jackpot":

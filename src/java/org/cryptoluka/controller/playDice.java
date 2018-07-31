@@ -6,7 +6,6 @@
 package org.cryptoluka.controller;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
@@ -110,7 +109,7 @@ public class playDice extends HttpServlet {
                 throw new Exception("Bet no es valido");
             }
 
-            if (paramMontoApostado == null || paramMontoApostado.trim().equalsIgnoreCase("") || Double.parseDouble(paramMontoApostado) < 0.00001000 || Double.parseDouble(paramMontoApostado) > 100) {
+            if (paramMontoApostado == null || paramMontoApostado.trim().equalsIgnoreCase("") || Double.parseDouble(paramMontoApostado) < 0.00000010 || Double.parseDouble(paramMontoApostado) > 100) {
                 throw new Exception("Monto apostado no es valido");
             }
 
